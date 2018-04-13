@@ -1,0 +1,108 @@
+<html>
+<body>
+    <script src="./web3.js"></script>
+    <script>
+        var MetaCoin = [
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "addr",
+                        "type": "address"
+                    }
+                ],
+                "name": "getBalanceInEth",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "receiver",
+                        "type": "address"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "sendCoin",
+                "outputs": [
+                    {
+                        "name": "sufficient",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "addr",
+                        "type": "address"
+                    }
+                ],
+                "name": "getBalance",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "_from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            }
+        ]
+        var provider = new Web3.providers.HttpProvider('http://127.0.0.1:9545');
+        var web3 = new Web3(provider);
+web3.eth.getAccounts((error, accounts) => {
+            document.writeln("Address of account 0: " + accounts[0] + "<br />");
+var MetaCoinContract = web3.eth.contract(MetaCoin);
+            var myMetaCoinInstance = MetaCoinContract.at('0xf25186b5081ff5ce73482ad761db0eb0d25abfbf');
+            var balance = myMetaCoinInstance.getBalance(accounts[0]);
+            
+            document.writeln("Balance for account 0: " + balance.valueOf());
+        });
+    </script>
+</body>
+</html>
